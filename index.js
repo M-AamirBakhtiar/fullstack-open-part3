@@ -93,7 +93,7 @@ app.delete('/api/persons/:id', (req, res, next) => {
 });
 
 app.get('/info', (req, res, next) => {
-  const message = `Phonebook has info for ${presons.length} people`;
+  const message = `Phonebook has info for ${persons.length} people`;
   const date = new Date().toLocaleDateString();
   const time = new Date().toLocaleTimeString();
   res.send(`
