@@ -1,7 +1,7 @@
-POST  https://enigmatic-depths-59939.herokuapp.com/api/persons
+POST  http://localhost:3001/api/persons
 Content-Type: application/json
 
 {
   "name": "test",
-  "number": "222-333-666"
+  "number": "333-888-777"
 }
