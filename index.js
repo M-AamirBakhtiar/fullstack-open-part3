@@ -98,7 +98,10 @@ app.put('/api/persons/:id', (req, res, next) => {
     number: body.number,
   };
 
-  Person.findByIdAndUpdate(req.params.id, person, { new: true })
+  Person.findByIdAndUpdate(req.params.id, person, {
+    new: true,
+    runValidators: true,
+  })
     .then((updatedPerson) => {
       res.json(updatedPerson);
     })
@@ -130,6 +133,13 @@ const errorHandler = (err, req, res, next) => {
 
   if (err.name === 'CastError') {
     return res.status(400).send({ error: 'malformatted id' });
+  } else if (err.name === 'ValidationError') {
+    return res.status(400).json({ error: err.message });
+  } else if (err.code === 11000) {
+    const value = err.message.match(/(["'])(\\?.)*?\1/)[0];
+
+    const message = `Duplicate field value: ${value}. Please use another value!`;
+    return res.status(400).send({ error: message });
   }
 
   next(err);
